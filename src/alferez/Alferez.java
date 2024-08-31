@@ -11,6 +11,9 @@ public class Alferez {
         
         Grade gr = new Grade();
         gr.getGrades();
+        
+        Product pr = new Product();
+//        pr.getProducts();
     }
     
 }

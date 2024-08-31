@@ -3,7 +3,7 @@ package alferez;
 public class Products {
     int pid, pstocks, psold;
     String pname;
-    double pprice;
+    double pprice, profit, tep;
     
     public void addProducts(int id, String name, double price, int stocks, int sold){
         this.pid = id;
@@ -14,11 +14,11 @@ public class Products {
     }
     
     public void viewProducts(){
-        double profit = this.psold * this.pprice;
-        double top = this.pstocks * this.pprice;
+        this.profit = this.psold * this.pprice;
+        this.tep = this.pstocks * this.pprice;
         String status = (this.pstocks > 0) ? "Available" : "Out-of-Stock";
         
-        System.out.printf("%-10d | %-10s | %-10.2f | %-10d | %-10d | %-10.2f | %-10.2f | %-10s\n", 
-                this.pid, this.pname, this.pprice, this.pstocks, this.psold, profit, top, status);
+        System.out.printf("%-10d %-10s %-10.2f %-10d %-10d %-10.2f %-10.2f %-10s\n", 
+                this.pid, this.pname, this.pprice, this.pstocks, this.psold, profit, tep, status);
     }
 }
