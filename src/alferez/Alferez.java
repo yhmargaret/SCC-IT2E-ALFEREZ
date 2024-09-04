@@ -10,10 +10,13 @@ public class Alferez {
 //        sell.get_sales();
         
         Grade gr = new Grade();
-        gr.getGrades();
+//        gr.getGrades();
         
         Product pr = new Product();
 //        pr.getProducts();
+
+        Account account = new Account();
+        account.getAccount();
     }
     
 }
