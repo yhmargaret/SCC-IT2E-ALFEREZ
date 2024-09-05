@@ -19,7 +19,7 @@ public class Accounts {
     }
     
     public void viewAccounts(){
-        System.out.printf("%-5d %-15s %-15s %-30s %-15s\n",
+        System.out.printf("%-5d %-15s %-15s %-35s %-15s\n",
                 this.id, this.firstName, this.lastName, this.email, this.username);
     }      
 }

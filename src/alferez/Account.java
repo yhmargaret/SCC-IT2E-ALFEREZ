@@ -5,79 +5,85 @@ import java.util.*;
 
 public class Account {
     
-    List<Accounts> acc = new ArrayList<>();
-    
     public void getAccount(){
         Scanner scan = new Scanner(System.in);
         
-        System.out.println("Enter Account Details:");
+        System.out.print("Enter Number of Accounts: ");
+        int acount = scan.nextInt();
         
-        boolean alreadyExist;
+        Accounts[] acc = new Accounts[acount];
         
-        int id;
-        do {
-            System.out.print("ID: ");
-            id = scan.nextInt();
-            alreadyExist = false;
-            for (Accounts acc1 : acc) {
-                if (acc1.id == id) {
-                    System.out.println("This ID already exists. Please enter a different ID.\n");
-                    alreadyExist = true;
-                    break;
-                }
-           }   
-        } while (alreadyExist);
-              
-        System.out.print("First Name: ");
-        String fs = scan.next();
-        System.out.print("Last Name: ");
-        String ls = scan.next();
+        for(int i = 0; i < acount; i++){
+            
+            acc[i] = new Accounts();
+            
+            System.out.printf("\nEnter Account Details for Account %d: \n", (i + 1));
+
+            boolean alreadyExist;
+
+            int id;
+            do {
+                System.out.print("ID: ");
+                id = scan.nextInt();
+                alreadyExist = false;
+                for (Accounts acc1 : acc) {
+                    if (acc1 != null && acc1.id == id) {
+                        System.out.println("This ID already exists. Please enter a different ID.\n");
+                        alreadyExist = true;
+                        break;
+                    }
+               }   
+            } while (alreadyExist);
+
+            System.out.print("First Name: ");
+            String fs = scan.next();
+            System.out.print("Last Name: ");
+            String ls = scan.next();
+
+            String email;
+            do {
+                System.out.print("Email: ");
+                email = scan.next();
+                alreadyExist = false;
+                for (Accounts acc1 : acc) {
+                    if (acc1 != null && acc1.email != null && acc1.email.equals(email)) {
+                        System.out.println("This Email already exists.\n");
+                        alreadyExist = true;
+                        break;
+                    }
+               }   
+            } while (alreadyExist);
+
+            String usern;
+            do {
+                System.out.print("Username: ");
+                usern = scan.next();
+                alreadyExist = false;
+                for (Accounts acc1 : acc) {
+                    if (acc1 != null && acc1.email != null && acc1.username.equals(usern)) {
+                        System.out.println("This Username already exists.\n");
+                        alreadyExist = true;
+                        break;
+                    }
+               }   
+            } while (alreadyExist);      
+
+            String pass;
+            String validPass;
+            do{ 
+                System.out.print("Password: ");
+                pass = scan.next();
+                validPass = this.passwordVerify(pass);
+                if(!validPass.equals("valid")){
+                    System.out.println(validPass + " Try Again.\n");
+                }          
+            }while(!validPass.equals("valid"));
         
-        String email;
-        do {
-            System.out.print("Email: ");
-            email = scan.next();
-            alreadyExist = false;
-            for (Accounts acc1 : acc) {
-                if (acc1.email.equals(email)) {
-                    System.out.println("This Email already exists.\n");
-                    alreadyExist = true;
-                    break;
-                }
-           }   
-        } while (alreadyExist);
-        
-        String usern;
-        do {
-            System.out.print("Username: ");
-            usern = scan.next();
-            alreadyExist = false;
-            for (Accounts acc1 : acc) {
-                if (acc1.username.equals(usern)) {
-                    System.out.println("This Username already exists.\n");
-                    alreadyExist = true;
-                    break;
-                }
-           }   
-        } while (alreadyExist);      
-        
-        String pass;
-        boolean validPass;
-        do{ 
-            System.out.print("Password: ");
-            pass = scan.next();
-            validPass = this.passwordVerify(pass);
-            if(!validPass){
-                System.out.println("Invalid Password, Try Again.\n");
-            }          
-        }while(!validPass);
-        
-        Accounts temp = new Accounts();
-        temp.addAccounts(id, fs, ls, email, usern, pass);
-        acc.add(temp);
+            acc[i].addAccounts(id, fs, ls, email, usern, pass);
+        }        
         
         System.out.println("");
-        System.out.printf("%-5s %-15s %-15s %-25s %-15s\n",
+        System.out.printf("%-5s %-15s %-15s %-35s %-15s\n",
                 "ID", "First Name", "Last Name", "Email", "Username");
         for(Accounts acc1 : acc) {
             acc1.viewAccounts();
@@ -86,13 +92,13 @@ public class Account {
         
     }
     
-    public boolean passwordVerify(String password) {
+    public String passwordVerify(String password) {
         boolean hasUppercase = false;
         boolean hasLowercase = false;
         boolean hasSpecialChar = false;
         
         if (password.length() < 8){
-            return false;
+            return "Password too short!";
         }
         
         for (char c : password.toCharArray()) {
@@ -107,6 +113,16 @@ public class Account {
             }
         }
 
-        return hasUppercase && hasLowercase && hasSpecialChar;
+        if(!hasUppercase){
+            return "Password Must Have an Uppercase Letter!";
+        }
+        if(!hasLowercase){
+            return "Password Must Have a Lowecase Letter!";
+        }
+        if(!hasSpecialChar){
+            return "Password Must Have a Special Character!";
+        }
+        
+        return "valid";
     }
 }
